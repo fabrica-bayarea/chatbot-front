@@ -1,4 +1,4 @@
-import Main from './Main';
+import Home from './Home';
 import NotFound from './NotFound';
 
-export { Main, NotFound };
+export { Home, NotFound };
