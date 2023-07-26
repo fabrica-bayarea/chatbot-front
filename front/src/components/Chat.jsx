@@ -3,31 +3,11 @@ import styled from 'styled-components';
 
 import { Input, MainButton } from './styled';
 
-const StyledContainer = styled.div`
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
-  display: flex;
-  flex-direction: column;
-  height: 600px;
-  padding: 20px;
-  width: 400px;
-
-  & > form {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-
-    & > input {
-      width: 100%;
-    }
-  }
-`;
-
 const Messages = styled.div`
   display: flex;
   flex-direction: column;
   flex-grow: 10;
+  height: 400px;
   overflow-y: scroll;
   padding: 20px;
 
@@ -45,6 +25,10 @@ const Messages = styled.div`
   }
 `;
 
+const MessageForm = styled.form`
+  margin-top: 20px;
+`;
+
 function Chat() {
   const inputRef = useRef();
   const [history, setHistory] = useState([]);
@@ -57,7 +41,7 @@ function Chat() {
   };
 
   return (
-    <StyledContainer>
+    <section>
       <Messages>
         <span>Olá! 👋</span>
         <span>Como posso lhe ajudar hoje?</span>
@@ -67,11 +51,11 @@ function Chat() {
           </span>
         ))}
       </Messages>
-      <form onSubmit={handleSubmit}>
+      <MessageForm onSubmit={handleSubmit}>
         <Input type='text' ref={inputRef} placeholder='Digite uma mensagem...' />
         <MainButton type='submit'>Enviar</MainButton>
-      </form>
-    </StyledContainer>
+      </MessageForm>
+    </section>
   );
 }
 

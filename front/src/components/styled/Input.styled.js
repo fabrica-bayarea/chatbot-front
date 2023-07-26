@@ -7,7 +7,7 @@ const Input = styled.input`
   font-size: inherit;
   height: 40px;
   padding: 0 10px;
-  width: 200px;
+  width: 100%;
 
   &::placeholder {
     color: lightgray;
