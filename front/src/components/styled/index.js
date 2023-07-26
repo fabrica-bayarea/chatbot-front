@@ -1,4 +1,4 @@
+import { Button, MainButton } from './Button.styled';
 import { Input } from './Input.styled';
-import { MainButton } from './Button.styled';
 
-export { Input, MainButton };
+export { Button, MainButton, Input };

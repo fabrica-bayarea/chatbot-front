@@ -26,6 +26,8 @@ const Messages = styled.div`
 `;
 
 const MessageForm = styled.form`
+  display: flex;
+  gap: 10px;
   margin-top: 20px;
 `;
 

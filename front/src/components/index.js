@@ -1,4 +1,5 @@
 import Chat from './Chat';
 import Header from './Header';
+import InputGroup from './InputGroup';
 
-export { Chat, Header };
+export { Chat, Header, InputGroup };
