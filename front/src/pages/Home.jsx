@@ -8,6 +8,7 @@ function Home() {
   const { user } = useContext(MainContext);
   const navigate = useNavigate();
 
+  // Login verification
   useEffect(() => {
     if (!user) {
       navigate('/login');

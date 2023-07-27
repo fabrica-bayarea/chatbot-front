@@ -1,25 +1,59 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import api from '../api';
+import { statusCodes } from '../utils';
 
 const MainContext = createContext();
 
 export function MainProvider({ children }) {
+  const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
-  const login = (data) => {
-    const expirationTime = new Date().getTime() + 60 * 60 * 1000;
-    const dataWithExpiration = { ...data, expirationTime };
-    localStorage.setItem('user', JSON.stringify(dataWithExpiration));
-    setUser(data);
-  };
+  // Generic function that prepares a request.
+  // If successful, execute the passed function, otherwise show an error message.
+  const makeRequest = useCallback(async (apiRequest, payload, successCode, successFn) => {
+    setIsLoading(true);
 
+    try {
+      const { status, data } = await apiRequest({ ...payload });
+      setIsLoading(false);
+
+      if (status === successCode) {
+        successFn(data);
+        return [true, data];
+      }
+
+      return [false, data];
+    } catch (error) {
+      setIsLoading(false);
+      return [false, error];
+    }
+  }, []);
+
+  // Request functions
+  const login = useCallback(
+    async (body) => {
+      const successFn = (data) => {
+        const expirationTime = new Date().getTime() + 60 * 60 * 1000;
+        const dataWithExpiration = { ...data, expirationTime };
+        localStorage.setItem('user', JSON.stringify(dataWithExpiration));
+        setUser(data);
+      };
+      return makeRequest(api.login, { body }, statusCodes.OK, successFn);
+    },
+    [makeRequest]
+  );
+
+  // Other functions
   const logout = () => {
     localStorage.removeItem('user');
     setUser(null);
   };
 
-  const shared = { login, logout, user, setUser };
+  const shared = { isLoading, login, logout, user };
 
+  // If the last login has expired, log out
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('user'));
     const currentTime = new Date().getTime();

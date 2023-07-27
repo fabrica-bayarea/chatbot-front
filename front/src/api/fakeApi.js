@@ -16,17 +16,19 @@ function fakeRequest(callbackFn) {
 }
 
 const fakeApi = {
-  async login(body) {
+  async login({ body }) {
     return fakeRequest(() => {
       const user = users.find((element) => element.email === body.email);
 
       if (!user) {
-        return { message: 'Usuário não encontrado' };
+        return { status: 404, data: { message: 'Usuário não encontrado' } };
       } else if (user.password !== body.password) {
-        return { message: 'Senha inválida' };
+        return { status: 409, data: { message: 'Senha inválida' } };
       }
 
-      return { ...user };
+      delete user.password;
+
+      return { status: 200, data: { ...user } };
     });
   },
 };

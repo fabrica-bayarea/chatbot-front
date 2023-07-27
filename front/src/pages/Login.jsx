@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import BeatLoader from 'react-spinners/BeatLoader';
 
-import api from '../api';
 import MainContext from '../context/MainContext';
 import { InputGroup } from '../components';
 import { MainButton } from '../components/styled';
@@ -39,35 +38,26 @@ const LoginForm = styled.form`
 `;
 
 function Login() {
-  const { login } = useContext(MainContext);
+  const { isLoading, login } = useContext(MainContext);
   const [inputValues, setInputValues] = useState({ email: '', password: '' });
-  const [isLoading, setIsLoading] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [statusMessage, setStatusMessage] = useState('');
   const navigate = useNavigate();
 
+  // Input handler
   const handleChange = ({ target: { name, value } }) => {
     setInputValues({ ...inputValues, [name]: value });
   };
 
+  // Execute the login
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    const [success, data] = await login({ ...inputValues });
 
-    try {
-      const result = await api.login({ ...inputValues });
-
-      if (result.message) {
-        setStatusMessage(result.message);
-        setIsLoading(false);
-      } else {
-        delete result.password;
-        login(result);
-        navigate('/');
-      }
-    } catch (error) {
-      setStatusMessage(error.message);
-      setIsLoading(false);
+    if (success) {
+      navigate('/');
+    } else {
+      setStatusMessage(data.message);
     }
   };
 
