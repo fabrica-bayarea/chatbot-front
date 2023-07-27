@@ -1,6 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import MainContext from '../context/MainContext';
 import { Input, MainButton } from './styled';
 
 const Messages = styled.div`
@@ -32,6 +33,7 @@ const MessageForm = styled.form`
 `;
 
 function Chat() {
+  const { user } = useContext(MainContext);
   const inputRef = useRef();
   const [history, setHistory] = useState([]);
 
@@ -45,12 +47,12 @@ function Chat() {
   return (
     <section>
       <Messages>
-        <span>Olá! 👋</span>
+        <span>Olá, {user?.name}! 👋</span>
         <span>Como posso lhe ajudar hoje?</span>
         {history.map((text, index) => (
           <span className='user-message' key={index}>
             {text}
-          </span>
+          </span> 
         ))}
       </Messages>
       <MessageForm onSubmit={handleSubmit}>

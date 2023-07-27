@@ -26,7 +26,7 @@ const fakeApi = {
         return { message: 'Senha inválida' };
       }
 
-      return user;
+      return { ...user };
     });
   },
 };
