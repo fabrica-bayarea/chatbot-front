@@ -38,7 +38,9 @@ const validations = {
   },
 };
 
-function runValidations(inputValues) {
+function runValidations(inputs) {
+  const inputValues = reduceInputs(inputs);
+
   for (let key in inputValues) {
     // If the input is not empty, do the validation.
     // If not valid, it returns false and an error message.
@@ -55,7 +57,7 @@ function runValidations(inputValues) {
   // If any required input is empty, it will return false.
   const verification = ([value, isRequired]) => isRequired === 'required' && !value;
 
-  if (Object.values(inputValues).some(verification)) {
+  if (Object.values(inputs).some(verification)) {
     return [false, ''];
   }
 
@@ -66,8 +68,7 @@ function useValidation(inputs) {
   const [validation, setValidation] = useState([false, '']);
 
   useEffect(() => {
-    const inputValues = reduceInputs(inputs);
-    setValidation(runValidations(inputValues));
+    setValidation(runValidations(inputs));
   }, [inputs]);
 
   return validation;
