@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 import { Button, Input } from './styled';
 
@@ -24,7 +24,7 @@ const Container = styled.div`
   }
 `;
 
-function PasswordInput({ name, onChange, placeholder, value }) {
+function PasswordInput({ name, ...attributes }) {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -33,9 +33,7 @@ function PasswordInput({ name, onChange, placeholder, value }) {
         type={showPassword ? 'text' : 'password'}
         id={`${name}-input`}
         name={name}
-        onChange={onChange}
-        placeholder={placeholder}
-        value={value}
+        {...attributes}
       />
       <Button type='button' onClick={() => setShowPassword(!showPassword)}>
         <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} />
@@ -46,9 +44,7 @@ function PasswordInput({ name, onChange, placeholder, value }) {
 
 PasswordInput.propTypes = {
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
+  attributes: PropTypes.object,
 };
 
 export default PasswordInput;

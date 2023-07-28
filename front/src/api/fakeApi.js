@@ -27,7 +27,6 @@ const fakeApi = {
       }
 
       delete user.password;
-
       return { status: 200, data: { ...user } };
     });
   },

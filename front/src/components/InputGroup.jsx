@@ -1,51 +1,26 @@
 import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-import PasswordInput from './PasswordInput';
 import { Input } from './styled';
+import PasswordInput from './PasswordInput';
 
 const Label = styled.label`
   display: flex;
   flex-direction: column;
   font-size: 0.75rem;
   font-weight: bold;
-  text-transform: uppercase;
   gap: 5px;
+  text-transform: uppercase;
 `;
 
-function InputGroup({
-  defaultValue,
-  label,
-  name,
-  onChange,
-  placeholder,
-  type = 'text',
-  value,
-}) {
+function InputGroup({ label, name, type = 'text', ...attributes }) {
   // Render functions
   const renderInput = () => {
     if (type === 'password') {
-      return (
-        <PasswordInput
-          name={name}
-          onChange={onChange}
-          placeholder={placeholder}
-          value={value}
-        />
-      );
+      return <PasswordInput name={name} {...attributes} />;
     } else {
-      return (
-        <Input
-          type={type}
-          defaultValue={defaultValue}
-          id={`${name}-input`}
-          name={name}
-          onChange={onChange}
-          placeholder={placeholder}
-          value={value}
-        />
-      );
+      return <Input type={type} id={`${name}-input`} name={name} {...attributes} />;
     }
   };
 
@@ -59,13 +34,10 @@ function InputGroup({
 }
 
 InputGroup.propTypes = {
-  defaultValue: PropTypes.string,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
-  placeholder: PropTypes.string,
   type: PropTypes.string,
-  value: PropTypes.string,
+  attributes: PropTypes.object,
 };
 
 export default InputGroup;

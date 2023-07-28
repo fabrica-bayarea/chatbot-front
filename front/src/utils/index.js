@@ -1,3 +1,4 @@
+import reduceInputs from './reduceInputs';
 import statusCodes from './statusCodes';
 
-export { statusCodes };
+export { reduceInputs, statusCodes };
