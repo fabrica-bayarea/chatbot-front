@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+
+import {
+  faCircleChevronLeft,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
 import styled from 'styled-components';
 
 import { InputGroup } from '../components';
-import { MainButton } from '../components/styled';
+import { Button, MainButton } from '../components/styled';
 import { MainContext } from '../context';
 import { useValidation } from '../hooks';
 import { reduceInputs } from '../utils';
@@ -16,12 +21,21 @@ const RegisterForm = styled.form`
   flex-direction: column;
   gap: 20px;
 
-  & > h2 {
-    font-size: 2rem;
+  & > div:first-of-type {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 60px;
+
+    & > h2 {
+      font-size: 2rem;
+    }
+
+    & > button {
+      font-size: 2.5rem;
+    }
   }
 
-  & > div {
+  & > div:nth-of-type(2) {
     color: red;
     font-size: 0.9rem;
     height: 50px;
@@ -74,7 +88,12 @@ function Register() {
     <main>
       <section>
         <RegisterForm onSubmit={handleSubmit}>
-          <h2>Registro</h2>
+          <div>
+            <h2>Registro</h2>
+            <Button type='button' onClick={() => navigate('/login')}>
+              <FontAwesomeIcon icon={faCircleChevronLeft} />
+            </Button>
+          </div>
           <InputGroup
             type='email'
             label='E-mail *'

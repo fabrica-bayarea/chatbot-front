@@ -20,7 +20,7 @@ export function MainProvider({ children }) {
       setIsLoading(false);
 
       if (status === successCode) {
-        successFn(data);
+        await successFn(data);
         return [true, data];
       }
 
@@ -34,7 +34,7 @@ export function MainProvider({ children }) {
   // Request functions
   const login = useCallback(
     async (body) => {
-      const successFn = (data) => {
+      const successFn = async (data) => {
         const expirationTime = new Date().getTime() + 60 * 60 * 1000;
         const dataWithExpiration = { ...data, expirationTime };
         localStorage.setItem('user', JSON.stringify(dataWithExpiration));
@@ -45,13 +45,21 @@ export function MainProvider({ children }) {
     [makeRequest]
   );
 
+  const register = useCallback(
+    async (body) => {
+      const successFn = async () => login(body);
+      return makeRequest(api.createUser, { body }, statusCodes.CREATED, successFn);
+    },
+    [login, makeRequest]
+  );
+
   // Other functions
   const logout = () => {
     localStorage.removeItem('user');
     setUser(null);
   };
 
-  const shared = { isLoading, login, logout, user };
+  const shared = { isLoading, login, logout, register, user };
 
   // If the last login has expired, log out
   useEffect(() => {
