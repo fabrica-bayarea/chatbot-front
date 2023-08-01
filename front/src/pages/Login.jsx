@@ -1,43 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
-import styled from 'styled-components';
 
-import { InputGroup } from '../components';
-import { MainButton } from '../components/styled';
+import { MainButton, Form, Section } from '../components/styled';
+import { Header, InputGroup } from '../components';
 import { MainContext } from '../context';
 import { useValidation } from '../hooks';
 import { reduceInputs } from '../utils';
-
-const LoginForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  & > h2 {
-    font-size: 2rem;
-    margin-bottom: 60px;
-  }
-
-  & > div {
-    color: red;
-    font-size: 0.9rem;
-    height: 50px;
-
-    svg {
-      margin-right: 10px;
-    }
-  }
-
-  & > a {
-    align-self: center;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    width: fit-content;
-  }
-`;
 
 const initialInputs = {
   email: ['', 'required'],
@@ -77,40 +48,45 @@ function Login() {
 
   return (
     <main>
-      <section>
-        <LoginForm onSubmit={handleSubmit}>
+      <Header />
+      <Section>
+        <header>
           <h2>Login</h2>
-          <InputGroup
-            type='email'
-            label='E-mail *'
-            name='email'
-            onChange={handleChange}
-            placeholder='Digite seu e-mail...'
-          />
-          <InputGroup
-            type='password'
-            label='Senha *'
-            name='password'
-            onChange={handleChange}
-            placeholder='Digite sua senha...'
-          />
-          <div>
-            {statusMessage && (
-              <span>
-                <FontAwesomeIcon icon={faTriangleExclamation} />
-                {statusMessage}
-              </span>
-            )}
-          </div>
-          <MainButton type='submit' disabled={isLoading || !isValid}>
-            {isLoading ? <BeatLoader size={8} /> : 'Entrar'}
-          </MainButton>
+        </header>
+        <div>
+          <Form onSubmit={handleSubmit}>
+            <InputGroup
+              type='email'
+              label='E-mail *'
+              name='email'
+              onChange={handleChange}
+              placeholder='Digite seu e-mail...'
+            />
+            <InputGroup
+              type='password'
+              label='Senha *'
+              name='password'
+              onChange={handleChange}
+              placeholder='Digite sua senha...'
+            />
+            <div>
+              {statusMessage && (
+                <span>
+                  <FontAwesomeIcon icon={faCircleExclamation} />
+                  {statusMessage}
+                </span>
+              )}
+            </div>
+            <MainButton type='submit' disabled={isLoading || !isValid}>
+              {isLoading ? <BeatLoader color='blue' size={8} /> : 'Entrar'}
+            </MainButton>
+          </Form>
           <a href=''>Esqueci minha senha</a>
           <MainButton type='button' onClick={() => navigate('/registro')}>
             Registro
           </MainButton>
-        </LoginForm>
-      </section>
+        </div>
+      </Section>
     </main>
   );
 }

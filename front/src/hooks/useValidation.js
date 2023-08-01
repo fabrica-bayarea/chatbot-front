@@ -15,7 +15,7 @@ const validations = {
 
   name({ name }) {
     if (name.length < 3) {
-      return 'Nome deve conter no mínimo 3 caracteres.';
+      return 'O nome deve conter no mínimo 3 caracteres.';
     }
 
     return true;
@@ -23,7 +23,7 @@ const validations = {
 
   password({ password }) {
     if (password.length < 6) {
-      return 'Senha deve conter no mínimo 6 caracteres.';
+      return 'A senha deve conter no mínimo 6 caracteres.';
     }
 
     return true;

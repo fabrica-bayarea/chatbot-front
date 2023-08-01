@@ -1,16 +1,14 @@
 import styled from 'styled-components';
 
 const Input = styled.input`
-  border: 1px solid lightgray;
   color: inherit;
   font-family: inherit;
-  font-size: 1rem;
-  height: 40px;
+  font-size: inherit;
   padding: 0 10px;
   width: 100%;
 
   &::placeholder {
-    color: lightgray;
+    color: var(--clr-light-gray);
     transition: opacity 200ms ease-in-out;
   }
 
@@ -19,4 +17,16 @@ const Input = styled.input`
   }
 `;
 
-export { Input };
+const MainInput = styled(Input)`
+  border: 1px solid var(--clr-lighter-gray);
+  height: 40px;
+`;
+
+const MessageInput = styled(Input)`
+  border: none;
+  border-bottom: 1px solid var(--clr-lighter-gray);
+  font-size: 1.2rem;
+  height: 50px;
+`;
+
+export { Input, MainInput, MessageInput };

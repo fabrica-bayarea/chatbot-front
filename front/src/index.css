@@ -1,6 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
 
+:root {
+  --clr-a: #4776e6;
+  --clr-b: #8e54e9;
+  --clr-c: #56ccf2;
+  --clr-d: #2f80ed;
+  --clr-dark: rgb(45 45 90);
+  --clr-light: rgb(240 240 255);
+  --clr-light-gray: rgb(215 215 215);
+  --clr-lighter-gray: rgb(240 240 240);
+  --clr-error: rgb(210 80 80);
+  --gradient-a: linear-gradient(to right, #4776e6, #8e54e9);
+  --gradient-b: linear-gradient(135deg, #56ccf2, #2f80ed);
+
+  --font-a: 'Lato', sans-serif;
+  --font-b: 'Ubuntu', sans-serif;
+}
+
 *,
 *::after,
 *::before {
@@ -10,11 +27,14 @@
 }
 
 a {
-  color: inherit;
+  color: var(--clr-dark);
+  border-bottom: 1px solid var(--clr-dark);
+  text-decoration: none;
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  color: var(--clr-dark);
+  font-family: var(--font-a);
 }
 
 h1,
@@ -23,24 +43,17 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: var(--font-b);
+}
+
+h1 {
+  font-size: 3rem;
 }
 
 main {
-  background: linear-gradient(135deg, #c6ffdd, #fbd786, #f7797d);
-  display: flex;
-  justify-content: center;
-  min-height: 100vh;
-  padding-top: 20vh;
-}
-
-section {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 2px 0 rgb(0 0 0 / 20%);
+  align-items: center;
+  background: var(--gradient-b);
   display: flex;
   flex-direction: column;
-  height: fit-content;
-  padding: 40px;
-  width: 400px;
+  min-height: 100vh;
 }

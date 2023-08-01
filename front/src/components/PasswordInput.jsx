@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-import { Button, Input } from './styled';
+import { Button, MainInput } from './styled';
 
 const Container = styled.div`
   position: relative;
@@ -15,7 +15,6 @@ const Container = styled.div`
 
   button {
     aspect-ratio: 2 / 1;
-    border-left: 1px solid lightgray;
     position: absolute;
     right: 0px;
     top: 50%;
@@ -29,7 +28,7 @@ function PasswordInput({ name, ...attributes }) {
 
   return (
     <Container>
-      <Input
+      <MainInput
         type={showPassword ? 'text' : 'password'}
         id={`${name}-input`}
         name={name}

@@ -1,8 +1,14 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
-import MainContext from '../context/MainContext';
-import { Input, MainButton } from './styled';
+import { IconButton, Form, MessageInput } from '../components/styled';
+
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+`;
 
 const Messages = styled.div`
   display: flex;
@@ -10,13 +16,13 @@ const Messages = styled.div`
   flex-grow: 10;
   height: 400px;
   overflow-y: scroll;
-  padding: 20px;
+  padding-right: 10px;
 
   & > span {
     background-color: rgb(240 240 240);
-    border-radius: 5px;
+    border-radius: 10px;
     margin: 4px 0;
-    padding: 4px 10px;
+    padding: 8px 10px;
     width: fit-content;
 
     &.user-message {
@@ -26,14 +32,13 @@ const Messages = styled.div`
   }
 `;
 
-const MessageForm = styled.form`
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
+const SendButton = styled(IconButton)`
+  bottom: 0;
+  position: absolute;
+  right: -65px;
 `;
 
 function Chat() {
-  const { user } = useContext(MainContext);
   const inputRef = useRef();
   const [history, setHistory] = useState([]);
 
@@ -45,21 +50,23 @@ function Chat() {
   };
 
   return (
-    <section>
+    <Container>
       <Messages>
-        <span>Olá, {user?.name}! 👋</span>
+        <span>Eu sou o Chatbot.</span>
         <span>Como posso lhe ajudar hoje?</span>
         {history.map((text, index) => (
           <span className='user-message' key={index}>
             {text}
-          </span> 
+          </span>
         ))}
       </Messages>
-      <MessageForm onSubmit={handleSubmit}>
-        <Input type='text' ref={inputRef} placeholder='Digite uma mensagem...' />
-        <MainButton type='submit'>Enviar</MainButton>
-      </MessageForm>
-    </section>
+      <Form onSubmit={handleSubmit}>
+        <MessageInput type='text' ref={inputRef} placeholder='Digite uma mensagem...' />
+        <SendButton type='submit' $height='60px' $mode='color'>
+          <FontAwesomeIcon icon={faPaperPlane} />
+        </SendButton>
+      </Form>
+    </Container>
   );
 }
 

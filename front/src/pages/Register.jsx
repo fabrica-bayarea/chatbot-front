@@ -1,50 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
-
-import {
-  faCircleChevronLeft,
-  faTriangleExclamation,
-} from '@fortawesome/free-solid-svg-icons';
-
+import { faChevronLeft, faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
-import styled from 'styled-components';
 
-import { InputGroup } from '../components';
-import { Button, MainButton } from '../components/styled';
+import { IconButton, MainButton, Form, Section } from '../components/styled';
+import { Header, InputGroup } from '../components';
 import { MainContext } from '../context';
 import { useValidation } from '../hooks';
 import { reduceInputs } from '../utils';
-
-const RegisterForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-  & > div:first-of-type {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 60px;
-
-    & > h2 {
-      font-size: 2rem;
-    }
-
-    & > button {
-      font-size: 2.5rem;
-    }
-  }
-
-  & > div:nth-of-type(2) {
-    color: red;
-    font-size: 0.9rem;
-    height: 50px;
-
-    svg {
-      margin-right: 10px;
-    }
-  }
-`;
 
 const initialInputs = {
   email: ['', 'required'],
@@ -74,7 +38,7 @@ function Register() {
     const [success, data] = await register(body);
 
     if (success) {
-      navigate('/');
+      navigate('/login');
     } else {
       setStatusMessage(data.message);
     }
@@ -86,55 +50,58 @@ function Register() {
 
   return (
     <main>
-      <section>
-        <RegisterForm onSubmit={handleSubmit}>
-          <div>
-            <h2>Registro</h2>
-            <Button type='button' onClick={() => navigate('/login')}>
-              <FontAwesomeIcon icon={faCircleChevronLeft} />
-            </Button>
-          </div>
-          <InputGroup
-            type='email'
-            label='E-mail *'
-            name='email'
-            onChange={handleChange}
-            placeholder='Digite seu e-mail...'
-          />
-          <InputGroup
-            type='text'
-            label='Primeiro nome *'
-            name='name'
-            onChange={handleChange}
-            placeholder='Digite seu nome...'
-          />
-          <InputGroup
-            type='password'
-            label='Senha *'
-            name='password'
-            onChange={handleChange}
-            placeholder='Digite uma senha...'
-          />
-          <InputGroup
-            type='password'
-            label='Confirmação de senha *'
-            name='confirmation'
-            onChange={handleChange}
-            placeholder='Confirme sua senha...'
-          />
-          <div>
-            {statusMessage && (
-              <span>
-                <FontAwesomeIcon icon={faTriangleExclamation} />
-                {statusMessage}
-              </span>
-            )}
-          </div>
-          <MainButton type='submit' disabled={isLoading || !isValid}>
-            {isLoading ? <BeatLoader size={8} /> : 'Registrar'}
-          </MainButton>
-        </RegisterForm>
-      </section>
+      <Header />
+      <Section>
+        <header>
+          <h2>Registro</h2>
+          <IconButton type='button' onClick={() => navigate('/login')}>
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </IconButton>
+        </header>
+        <div>
+          <Form onSubmit={handleSubmit}>
+            <InputGroup
+              type='email'
+              label='E-mail *'
+              name='email'
+              onChange={handleChange}
+              placeholder='Digite seu e-mail...'
+            />
+            <InputGroup
+              type='text'
+              label='Primeiro nome *'
+              name='name'
+              onChange={handleChange}
+              placeholder='Digite seu nome...'
+            />
+            <InputGroup
+              type='password'
+              label='Senha *'
+              name='password'
+              onChange={handleChange}
+              placeholder='Digite uma senha...'
+            />
+            <InputGroup
+              type='password'
+              label='Confirmação de senha *'
+              name='confirmation'
+              onChange={handleChange}
+              placeholder='Confirme sua senha...'
+            />
+            <div>
+              {statusMessage && (
+                <span>
+                  <FontAwesomeIcon icon={faCircleExclamation} />
+                  {statusMessage}
+                </span>
+              )}
+            </div>
+            <MainButton type='submit' disabled={isLoading || !isValid}>
+              {isLoading ? <BeatLoader color='blue' size={8} /> : 'Registrar'}
+            </MainButton>
+          </Form>
+        </div>
+      </Section>
     </main>
   );
 }
