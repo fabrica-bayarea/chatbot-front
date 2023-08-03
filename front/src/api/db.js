@@ -2,7 +2,8 @@ import Dexie from 'dexie';
 
 const db = new Dexie('Chatbot');
 
-db.version(1).stores({
+db.version(2).stores({
+  conversations: '++id, user_id, messages',
   users: '++id, email, name, password',
 });
 

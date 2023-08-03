@@ -19,6 +19,7 @@ const Input = styled.input`
 
 const MainInput = styled(Input)`
   border: 1px solid var(--clr-lighter-gray);
+  font-size: 1rem;
   height: 40px;
 `;
 

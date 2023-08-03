@@ -14,32 +14,30 @@ export function MainProvider({ children }) {
   // If successful, execute the passed function, otherwise show an error message.
   const makeRequest = useCallback(async (apiRequest, payload, successCode, successFn) => {
     setIsLoading(true);
-
     try {
       const { status, data } = await apiRequest({ ...payload });
-      setIsLoading(false);
-
       if (status === successCode) {
         await successFn(data);
         return [true, data];
       }
-
       return [false, data];
     } catch (error) {
-      setIsLoading(false);
       return [false, error];
+    } finally {
+      setIsLoading(false);
     }
   }, []);
 
   // Request functions
   const login = useCallback(
     async (body) => {
-      const successFn = async (data) => {
+      const successFn = (data) => {
         const expirationTime = new Date().getTime() + 60 * 60 * 1000;
         const dataWithExpiration = { ...data, expirationTime };
         localStorage.setItem('user', JSON.stringify(dataWithExpiration));
         setUser(data);
       };
+
       return makeRequest(api.login, { body }, statusCodes.OK, successFn);
     },
     [makeRequest]
@@ -59,13 +57,12 @@ export function MainProvider({ children }) {
     setUser(null);
   };
 
-  const shared = { isLoading, login, logout, register, user };
+  const shared = { isLoading, login, logout, makeRequest, register, user };
 
   // If the last login has expired, log out
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('user'));
     const currentTime = new Date().getTime();
-
     if (localUser && currentTime > localUser.expirationTime) {
       logout();
     }

@@ -25,7 +25,7 @@ function Home() {
         <header>
           <span>Olá, {user?.name}! 👋</span>
           <Button type='button'>
-            <FontAwesomeIcon icon={faBars} size='lg' />
+            <FontAwesomeIcon icon={faBars} />
           </Button>
         </header>
         <div>

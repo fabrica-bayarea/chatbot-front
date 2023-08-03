@@ -28,10 +28,10 @@ const Logo = styled.div`
 
     &::before,
     &::after {
+      content: '';
       aspect-ratio: 1;
       background-color: var(--clr-a);
       border-radius: 50%;
-      content: '';
       position: absolute;
       top: 20px;
       width: 20px;

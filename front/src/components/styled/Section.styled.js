@@ -1,21 +1,22 @@
 import styled from 'styled-components';
 
 const Section = styled.section`
-  border-radius: 20px;
+  --r: 20px;
+
+  border-radius: var(--r);
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
   display: flex;
   flex-direction: column;
   height: fit-content;
-  width: 380px;
+  width: 400px;
 
   & > header {
     align-items: center;
     background-color: var(--clr-a);
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: var(--r) var(--r) 0 0;
     color: white;
     display: flex;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     height: 120px;
     justify-content: space-between;
     padding: 0 40px;
@@ -24,8 +25,7 @@ const Section = styled.section`
   & > div {
     align-items: center;
     background-color: white;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-radius: 0 0 var(--r) var(--r);
     display: flex;
     flex-direction: column;
     gap: 20px;
