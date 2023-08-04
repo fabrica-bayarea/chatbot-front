@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BeatLoader from 'react-spinners/BeatLoader';
 import styled, { css } from 'styled-components';
 
-import { IconButton, Form, MessageInput } from '../components/styled';
-import { ChatContext } from '../context';
+import { IconButton, Form, MessageInput } from './styled';
+import { ChatContext, MainContext } from '../context';
 
 const Container = styled.div`
   padding: 0;
@@ -15,19 +16,29 @@ const Container = styled.div`
 const Conversation = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 10;
   gap: 30px;
   height: 400px;
   overflow-y: scroll;
-  padding-right: 10px;
+  padding: 40px 10px 0 20px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--clr-c);
+  }
+
+  & > div {
+    margin: 0 20px 40px;
+  }
 `;
 
 const Message = styled.span`
-  --r: 5px;
+  --r: 4px;
 
-  font-size: 0.9rem;
   line-height: 20px;
-  padding: 10px;
+  padding: 8px 16px;
   width: fit-content;
 
   ${(props) =>
@@ -44,9 +55,10 @@ const Message = styled.span`
         aspect-ratio: 1 / 1;
         background-color: var(--clr-a);
         border-radius: 50%;
-        bottom: 5px;
+        bottom: 0;
         color: var(--clr-light);
         display: flex;
+        font-size: 0.8rem;
         font-weight: bold;
         height: 30px;
         justify-content: center;
@@ -62,26 +74,50 @@ const Message = styled.span`
       background-color: var(--clr-lighter-gray);
       border-radius: var(--r) var(--r) 0 var(--r);
     `}
+
+    ${(props) =>
+    props.$role === 'error' &&
+    css`
+      align-self: center;
+      background-color: var(--clr-light-red);
+      border-radius: var(--r);
+      padding: 8px;
+    `}
 `;
 
 const SendButton = styled(IconButton)`
-  bottom: 0;
+  bottom: 20px;
   position: absolute;
-  right: -65px;
+  right: -30px;
 `;
 
 function Chat() {
+  const { isLoading } = useContext(MainContext);
   const { messages, getReply } = useContext(ChatContext);
   const inputRef = useRef();
   const loadingRef = useRef();
+  const [error, setError] = useState(false);
 
+  // Requests a reply to update the conversation.
   const handleSubmit = async (event) => {
     event.preventDefault();
     const content = inputRef.current.value;
+
+    if (!content || isLoading) {
+      return;
+    }
+
     inputRef.current.value = '';
-    await getReply(content);
+    const [success] = await getReply(content);
+
+    if (success) {
+      setError(false);
+    } else {
+      setError(true);
+    }
   };
 
+  // Keeps the last message always visible
   useEffect(() => {
     loadingRef.current.scrollIntoView();
   }, [messages]);
@@ -89,14 +125,20 @@ function Chat() {
   return (
     <Container>
       <Conversation>
-        <Message $role='assistant'>Eu sou Eda, assistente virtual.</Message>
-        <Message $role='assistant'>Como posso lhe ajudar hoje?</Message>
+        <Message $role='assistant'>
+          Eu sou Eda, assistente virtual.
+          <br />
+          Como posso lhe ajudar hoje?
+        </Message>
         {messages.map((message, index) => (
           <Message key={index} $role={message.role}>
             {message.content}
           </Message>
         ))}
-        <span ref={loadingRef}></span>
+        {error && <Message $role='error'>Ooops... algo deu errado.</Message>}
+        <div ref={loadingRef}>
+          {isLoading && <BeatLoader color='lightgray' size={8} />}
+        </div>
       </Conversation>
       <Form onSubmit={handleSubmit}>
         <MessageInput type='text' ref={inputRef} placeholder='Digite uma mensagem...' />

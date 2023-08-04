@@ -13,7 +13,6 @@ const Button = styled.button`
 
   &:disabled {
     cursor: unset;
-    opacity: 0.4;
   }
 `;
 
@@ -43,6 +42,10 @@ const MainButton = styled(Button)`
   height: 50px;
   padding: 0 10px;
   width: 250px;
+
+  &:disabled {
+    opacity: 0.4;
+  }
 `;
 
 export { Button, IconButton, MainButton };

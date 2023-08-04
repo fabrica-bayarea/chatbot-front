@@ -7,7 +7,7 @@ axios.defaults.baseURL = 'http://localhost:3001';
 function fakeRequest(successFn) {
   const promise = new Promise((resolve, reject) => {
     setTimeout(async () => {
-      const isSuccess = Math.random() < 0.98;
+      const isSuccess = Math.random() < 0.9;
       if (isSuccess) {
         const result = await successFn();
         resolve(result);
@@ -49,7 +49,7 @@ const fakeApi = {
     return fakeRequest(successFn);
   },
 
-  async fetchConversation({ body: { id } }) {
+  async fetchConversation({ id }) {
     const successFn = async () => {
       const conversation = await db.conversations.get(id);
       if (!conversation) {

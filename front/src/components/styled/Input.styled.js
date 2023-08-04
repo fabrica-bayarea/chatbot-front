@@ -25,7 +25,7 @@ const MainInput = styled(Input)`
 
 const MessageInput = styled(Input)`
   border: none;
-  border-bottom: 1px solid var(--clr-lighter-gray);
+  border-top: 1px solid var(--clr-lighter-gray);
   font-size: 1.2rem;
   height: 50px;
 `;
