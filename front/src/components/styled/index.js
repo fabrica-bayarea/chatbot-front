@@ -1,7 +1,8 @@
 import { Button, IconButton, MainButton } from './Button.styled';
 import { Form } from './Form.styled';
-import { Input, MainInput, MessageInput } from './Input.styled';
+import { Input, ChatInput, MainInput } from './Input.styled';
 import { Label } from './Label.styled';
+import { Main } from './Main.styled';
 import { Section } from './Section.styled';
 
 export {
@@ -10,8 +11,9 @@ export {
   MainButton,
   Form,
   Input,
+  ChatInput,
   MainInput,
-  MessageInput,
   Label,
+  Main,
   Section,
 };

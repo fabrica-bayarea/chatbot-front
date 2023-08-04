@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import BeatLoader from 'react-spinners/BeatLoader';
 
-import { IconButton, MainButton, Form, Section } from '../components/styled';
-import { Header, InputGroup } from '../components';
+import { IconButton, MainButton, Form, Main, Section } from '../components/styled';
+import { InputGroup, Logo } from '../components';
 import { MainContext } from '../context';
 import { useValidation } from '../hooks';
 import { reduceInputs } from '../utils';
@@ -49,8 +49,8 @@ function Register() {
   }, [validationMessage]);
 
   return (
-    <main>
-      <Header />
+    <Main>
+      <Logo />
       <Section>
         <header>
           <h2>Registro</h2>
@@ -102,7 +102,7 @@ function Register() {
           </Form>
         </div>
       </Section>
-    </main>
+    </Main>
   );
 }
 

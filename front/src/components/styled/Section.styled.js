@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { devices } from '../../utils';
+
 const Section = styled.section`
   --r: 20px;
 
@@ -8,7 +10,7 @@ const Section = styled.section`
   display: flex;
   flex-direction: column;
   height: fit-content;
-  width: 400px;
+  width: 420px;
 
   & > header {
     align-items: center;
@@ -30,6 +32,18 @@ const Section = styled.section`
     flex-direction: column;
     gap: 20px;
     padding-bottom: 40px;
+  }
+
+  @media ${devices.mobileL} {
+    width: 100%;
+
+  & > header {
+    padding: 0 20px;
+
+    & > h2 {
+      font-size: 2rem;
+    }
+  }
   }
 `;
 

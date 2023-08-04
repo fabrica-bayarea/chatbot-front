@@ -3,8 +3,8 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Section } from '../components/styled';
-import { Header, Chat } from '../components';
+import { Button, Main, Section } from '../components/styled';
+import { Chat, Logo } from '../components';
 import { MainContext } from '../context';
 
 function Home() {
@@ -19,8 +19,8 @@ function Home() {
   }, [navigate, user]);
 
   return (
-    <main>
-      <Header />
+    <Main>
+      <Logo />
       <Section>
         <header>
           <span>Olá, {user?.name}! 👋</span>
@@ -32,7 +32,7 @@ function Home() {
           <Chat />
         </div>
       </Section>
-    </main>
+    </Main>
   );
 }
 

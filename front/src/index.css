@@ -47,14 +47,18 @@ h6 {
   font-family: var(--font-b);
 }
 
-h1 {
-  font-size: 3rem;
+.container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  vertical-align: middle;
+  overflow: hidden;
 }
 
-main {
-  align-items: center;
-  background: var(--gradient-b);
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.container svg {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
 }

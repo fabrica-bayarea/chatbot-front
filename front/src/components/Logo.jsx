@@ -1,15 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Container = styled.header`
+import { devices } from '../utils';
+
+const Container = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 4vh 0;
+  scale: 1.2;
+
+  @media ${devices.laptopS} {
+    scale: 0.8;
+  }
 `;
 
-const Logo = styled.div`
+const LogoImage = styled.div`
   align-items: center;
   background: var(--gradient-a);
   border-radius: 50px;
@@ -47,15 +53,19 @@ const Logo = styled.div`
   }
 `;
 
-function Header() {
+const LogoText = styled.h1`
+  font-size: 5rem;
+`;
+
+function Logo() {
   return (
     <Container>
-      <Logo>
+      <LogoImage>
         <div></div>
-      </Logo>
-      <h1>Chatbot</h1>
+      </LogoImage>
+      <LogoText>Chatbot</LogoText>
     </Container>
   );
 }
 
-export default Header;
+export default Logo;

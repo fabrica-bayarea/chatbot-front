@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BeatLoader from 'react-spinners/BeatLoader';
 import styled, { css } from 'styled-components';
 
-import { IconButton, Form, MessageInput } from './styled';
+import { IconButton, Form, ChatInput } from './styled';
 import { ChatContext, MainContext } from '../context';
+import { devices } from '../utils/';
 
 const Container = styled.div`
   padding: 0;
@@ -17,9 +18,9 @@ const Conversation = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
-  height: 400px;
+  height: 500px;
   overflow-y: scroll;
-  padding: 40px 10px 0 20px;
+  padding: 40px 20px 0 40px;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -32,13 +33,21 @@ const Conversation = styled.div`
   & > div {
     margin: 0 20px 40px;
   }
+
+  @media ${devices.laptopS} {
+    height: 400px;
+  }
+
+  @media ${devices.mobileL} {
+    padding: 40px 10px 0;
+  }
 `;
 
-const Message = styled.span`
+const ChatMessage = styled.span`
   --r: 4px;
 
   line-height: 20px;
-  padding: 8px 16px;
+  padding: 10px;
   width: fit-content;
 
   ${(props) =>
@@ -89,6 +98,10 @@ const SendButton = styled(IconButton)`
   bottom: 20px;
   position: absolute;
   right: -30px;
+
+  @media ${devices.mobileL} {
+    right: 10px;
+  }
 `;
 
 function Chat() {
@@ -125,23 +138,23 @@ function Chat() {
   return (
     <Container>
       <Conversation>
-        <Message $role='assistant'>
+        <ChatMessage $role='assistant'>
           Eu sou Eda, assistente virtual.
           <br />
           Como posso lhe ajudar hoje?
-        </Message>
+        </ChatMessage>
         {messages.map((message, index) => (
-          <Message key={index} $role={message.role}>
+          <ChatMessage key={index} $role={message.role}>
             {message.content}
-          </Message>
+          </ChatMessage>
         ))}
-        {error && <Message $role='error'>Ooops... algo deu errado.</Message>}
+        {error && <ChatMessage $role='error'>Ooops... algo deu errado.</ChatMessage>}
         <div ref={loadingRef}>
           {isLoading && <BeatLoader color='lightgray' size={8} />}
         </div>
       </Conversation>
       <Form onSubmit={handleSubmit}>
-        <MessageInput type='text' ref={inputRef} placeholder='Digite uma mensagem...' />
+        <ChatInput type='text' ref={inputRef} placeholder='Digite uma mensagem...' />
         <SendButton type='submit' $height='60px' $mode='color'>
           <FontAwesomeIcon icon={faPaperPlane} />
         </SendButton>

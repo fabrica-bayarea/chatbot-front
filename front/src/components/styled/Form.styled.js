@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { devices } from '../../utils';
+
 const Form = styled.form`
   align-items: center;
   display: flex;
@@ -16,6 +18,10 @@ const Form = styled.form`
     svg {
       margin-right: 10px;
     }
+  }
+
+  @media ${devices.mobileL} {
+    padding: 40px 20px 0;
   }
 `;
 

@@ -4,6 +4,7 @@ const Input = styled.input`
   color: inherit;
   font-family: inherit;
   font-size: inherit;
+  height: 40px;
   padding: 0 10px;
   width: 100%;
 
@@ -17,17 +18,16 @@ const Input = styled.input`
   }
 `;
 
-const MainInput = styled(Input)`
-  border: 1px solid var(--clr-lighter-gray);
-  font-size: 1rem;
-  height: 40px;
-`;
-
-const MessageInput = styled(Input)`
+const ChatInput = styled(Input)`
   border: none;
   border-top: 1px solid var(--clr-lighter-gray);
   font-size: 1.2rem;
   height: 50px;
 `;
 
-export { Input, MainInput, MessageInput };
+const MainInput = styled(Input)`
+  border: 1px solid var(--clr-lighter-gray);
+  font-size: 1rem;
+`;
+
+export { Input, ChatInput, MainInput };
