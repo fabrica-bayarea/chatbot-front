@@ -1,10 +1,8 @@
 import React, { useContext, useEffect } from 'react';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Main, Section } from '../components/styled';
-import { Chat, Logo } from '../components';
+import { Main, Section } from '../components/styled';
+import { Chat, Dropdown, Logo } from '../components';
 import { MainContext } from '../context';
 
 function Home() {
@@ -24,9 +22,7 @@ function Home() {
       <Section>
         <header>
           <span>Olá, {user?.name}! 👋</span>
-          <Button type='button'>
-            <FontAwesomeIcon icon={faBars} />
-          </Button>
+          <Dropdown />
         </header>
         <div>
           <Chat />

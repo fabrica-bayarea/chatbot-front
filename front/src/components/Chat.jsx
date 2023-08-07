@@ -31,7 +31,7 @@ const Conversation = styled.div`
   }
 
   & > div {
-    margin: 0 20px 40px;
+    margin: 0 0 40px 40px;
   }
 
   @media ${devices.laptopS} {
@@ -62,7 +62,7 @@ const ChatMessage = styled.span`
         content: 'E';
         align-items: center;
         aspect-ratio: 1 / 1;
-        background-color: var(--clr-a);
+        background-color: var(--clr-d);
         border-radius: 50%;
         bottom: 0;
         color: var(--clr-light);
@@ -96,6 +96,7 @@ const ChatMessage = styled.span`
 
 const SendButton = styled(IconButton)`
   bottom: 20px;
+  height: 60px;
   position: absolute;
   right: -30px;
 
@@ -121,11 +122,10 @@ function Chat() {
     }
 
     inputRef.current.value = '';
+    setError(false);
     const [success] = await getReply(content);
 
-    if (success) {
-      setError(false);
-    } else {
+    if (!success) {
       setError(true);
     }
   };
@@ -155,7 +155,7 @@ function Chat() {
       </Conversation>
       <Form onSubmit={handleSubmit}>
         <ChatInput type='text' ref={inputRef} placeholder='Digite uma mensagem...' />
-        <SendButton type='submit' $height='60px' $mode='color'>
+        <SendButton type='submit' $bg='color'>
           <FontAwesomeIcon icon={faPaperPlane} />
         </SendButton>
       </Form>

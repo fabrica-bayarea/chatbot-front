@@ -7,7 +7,7 @@ axios.defaults.baseURL = 'http://localhost:3001';
 function fakeRequest(successFn) {
   const promise = new Promise((resolve, reject) => {
     setTimeout(async () => {
-      const isSuccess = Math.random() < 0.9;
+      const isSuccess = Math.random() < 0.95;
       if (isSuccess) {
         const result = await successFn();
         resolve(result);

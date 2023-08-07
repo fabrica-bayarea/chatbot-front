@@ -14,14 +14,21 @@ const Section = styled.section`
 
   & > header {
     align-items: center;
-    background-color: var(--clr-a);
+    background-color: var(--clr-d);
     border-radius: var(--r) var(--r) 0 0;
     color: white;
     display: flex;
-    font-size: 1.5rem;
     height: 120px;
     justify-content: space-between;
     padding: 0 40px;
+
+    & > h2 {
+      font-size: 2.4rem;
+    }
+
+    & > span {
+      font-size: 1.5rem;
+    }
   }
 
   & > div {
@@ -37,13 +44,13 @@ const Section = styled.section`
   @media ${devices.mobileL} {
     width: 100%;
 
-  & > header {
-    padding: 0 20px;
+    & > header {
+      padding: 0 20px;
 
-    & > h2 {
-      font-size: 2rem;
+      & > h2 {
+        font-size: 2rem;
+      }
     }
-  }
   }
 `;
 

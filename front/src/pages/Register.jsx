@@ -54,7 +54,7 @@ function Register() {
       <Section>
         <header>
           <h2>Registro</h2>
-          <IconButton type='button' onClick={() => navigate('/login')}>
+          <IconButton type='button' onClick={() => navigate('/login')} $bg={'white'}>
             <FontAwesomeIcon icon={faChevronLeft} />
           </IconButton>
         </header>

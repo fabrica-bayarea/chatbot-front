@@ -16,21 +16,39 @@ const Button = styled.button`
   }
 `;
 
+const DropdownButton = styled(Button)`
+  background-color: var(--clr-a);
+  color: var(--clr-light);
+  justify-content: flex-start;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+
+  &:hover {
+    background-color: var(--clr-b);
+  }
+`;
+
 const IconButton = styled(Button)`
   aspect-ratio: 1 / 1;
-  background-color: white;
   border-radius: 50%;
-  box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
-  color: var(--clr-a);
+  color: var(--clr-light);
   font-size: 1.5rem;
-  height: ${(props) => props.$height || '40px'};
+  height: 40px;
   scale: ${(props) => props.$scale || 1};
 
   ${(props) =>
-    props.$mode === 'color' &&
+    props.$bg === 'white' &&
+    css`
+      background-color: white;
+      box-shadow: 0 4px 4px 0 rgb(0 0 0 / 40%);
+      color: var(--clr-d);
+    `}
+
+  ${(props) =>
+    props.$bg === 'color' &&
     css`
       background: var(--gradient-a);
-      color: var(--clr-light);
+      box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
     `}
 `;
 
@@ -48,4 +66,4 @@ const MainButton = styled(Button)`
   }
 `;
 
-export { Button, IconButton, MainButton };
+export { Button, DropdownButton, IconButton, MainButton };

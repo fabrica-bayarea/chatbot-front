@@ -48,7 +48,13 @@ export function ChatProvider({ children }) {
     [conversationId, makeRequest, messages, user?.id]
   );
 
-  const shared = { getConversation, getReply, messages };
+  // Other functions
+  const startNewConversation = () => {
+    setConversationId(undefined);
+    setMessages([]);
+  };
+
+  const shared = { getConversation, getReply, messages, startNewConversation };
 
   return <ChatContext.Provider value={{ ...shared }}>{children}</ChatContext.Provider>;
 }
