@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { MainInput, Label } from './styled';
 import PasswordInput from './PasswordInput';
+import { MainInput, Label } from './styled';
 
 function InputGroup({ label, name, type = 'text', ...attributes }) {
   // Render functions

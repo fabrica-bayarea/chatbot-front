@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { faBars, faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
-import { DropdownButton, IconButton } from '../components/styled';
+import { DropdownButton, IconButton } from './styled';
 import { ChatContext, MainContext } from '../context';
 
 const Container = styled.div`
@@ -12,6 +13,7 @@ const Container = styled.div`
 `;
 
 const ToggleButton = styled(IconButton)`
+  color: var(--clr-light);
   font-size: 2rem;
   position: relative;
   z-index: 100;
@@ -40,9 +42,9 @@ const Navigation = styled.nav`
     `}
 `;
 
-function Dropdown() {
+function Dropdown({ showFn }) {
+  const { changeConversation } = useContext(ChatContext);
   const { logout } = useContext(MainContext);
-  const { startNewConversation } = useContext(ChatContext);
   const navigate = useNavigate();
   const toggleRef = useRef();
   const [isVisible, setIsVisible] = useState(false);
@@ -50,7 +52,7 @@ function Dropdown() {
   // Listen for click events outside the button to close the menu
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (!toggleRef.current.contains(event.target) && isVisible) {
+      if (isVisible && !toggleRef.current.contains(event.target)) {
         setIsVisible(false);
       }
     };
@@ -72,19 +74,23 @@ function Dropdown() {
       <Navigation $visibility={isVisible}>
         <DropdownButton
           type='button'
-          className='dropdown-button'
           onClick={() => {
-            startNewConversation();
+            changeConversation();
+            showFn(false);
           }}
         >
           Nova conversa
         </DropdownButton>
-        <DropdownButton type='button' className='dropdown-button' onClick={() => {}}>
+        <DropdownButton
+          type='button'
+          onClick={() => {
+            showFn(true);
+          }}
+        >
           Histórico
         </DropdownButton>
         <DropdownButton
           type='button'
-          className='dropdown-button'
           onClick={() => {
             logout();
             navigate('/login');
@@ -96,5 +102,9 @@ function Dropdown() {
     </Container>
   );
 }
+
+Dropdown.propTypes = {
+  showFn: PropTypes.func,
+};
 
 export default Dropdown;

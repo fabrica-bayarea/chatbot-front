@@ -31,7 +31,7 @@ const DropdownButton = styled(Button)`
 const IconButton = styled(Button)`
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  color: var(--clr-light);
+  color: ${(props) => props.$color || 'var(--clr-dark)'};
   font-size: 1.5rem;
   height: 40px;
   scale: ${(props) => props.$scale || 1};
@@ -40,7 +40,7 @@ const IconButton = styled(Button)`
     props.$bg === 'white' &&
     css`
       background-color: white;
-      box-shadow: 0 4px 4px 0 rgb(0 0 0 / 40%);
+      box-shadow: 0 4px 4px 0 rgb(0 0 0 / 20%);
       color: var(--clr-d);
     `}
 
@@ -49,6 +49,7 @@ const IconButton = styled(Button)`
     css`
       background: var(--gradient-a);
       box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
+      color: var(--clr-light);
     `}
 `;
 

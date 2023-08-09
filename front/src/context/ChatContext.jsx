@@ -1,8 +1,8 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import api from '../api';
 import MainContext from './MainContext';
+import api from '../api';
 import { statusCodes } from '../utils';
 
 const ChatContext = createContext();
@@ -11,19 +11,32 @@ export function ChatProvider({ children }) {
   const { makeRequest, user } = useContext(MainContext);
   const [conversationId, setConversationId] = useState(undefined);
   const [messages, setMessages] = useState([]);
+  const [history, setHistory] = useState([]);
 
   // Request functions
-  const getConversation = useCallback(
+  const deleteConversation = useCallback(
     async (id) => {
-      const successFn = (data) => {
-        setConversationId(data.id);
-        setMessages(data.messages);
+      const successFn = () => {
+        setHistory(history.filter((conversation) => conversation.id !== id));
       };
 
-      return makeRequest(api.fetchConversation, { id }, statusCodes.OK, successFn);
+      return makeRequest(api.deleteConversation, { id }, statusCodes.OK, successFn);
     },
-    [makeRequest]
+    [history, makeRequest]
   );
+
+  const getHistory = useCallback(async () => {
+    const successFn = (data) => {
+      const sortedData = data.sort((a, b) => {
+        const timeA = a.messages[a.messages.length - 1].time;
+        const timeB = b.messages[b.messages.length - 1].time;
+        return timeB - timeA;
+      });
+      setHistory(sortedData);
+    };
+
+    return makeRequest(api.fetchHistory, { userId: user.id }, statusCodes.OK, successFn);
+  }, [makeRequest, user?.id]);
 
   const getReply = useCallback(
     async (content) => {
@@ -49,12 +62,20 @@ export function ChatProvider({ children }) {
   );
 
   // Other functions
-  const startNewConversation = () => {
-    setConversationId(undefined);
-    setMessages([]);
+  const changeConversation = (id = undefined, messages = []) => {
+    setConversationId(id);
+    setMessages(messages);
   };
 
-  const shared = { getConversation, getReply, messages, startNewConversation };
+  const shared = {
+    messages,
+    history,
+    setHistory,
+    changeConversation,
+    deleteConversation,
+    getHistory,
+    getReply,
+  };
 
   return <ChatContext.Provider value={{ ...shared }}>{children}</ChatContext.Provider>;
 }

@@ -81,7 +81,9 @@ function Login() {
               {isLoading ? <BeatLoader color='blue' size={8} /> : 'Entrar'}
             </MainButton>
           </Form>
-          <a href=''>Esqueci minha senha</a>
+          <a href='' style={{ textDecoration: 'line-through' }}>
+            Esqueci minha senha
+          </a>
           <MainButton type='button' onClick={() => navigate('/registro')}>
             Registro
           </MainButton>

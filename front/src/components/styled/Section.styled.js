@@ -9,7 +9,6 @@ const Section = styled.section`
   box-shadow: 0 2px 4px 0 rgb(0 0 0 / 20%);
   display: flex;
   flex-direction: column;
-  height: fit-content;
   width: 420px;
 
   & > header {
@@ -23,7 +22,7 @@ const Section = styled.section`
     padding: 0 40px;
 
     & > h2 {
-      font-size: 2.4rem;
+      font-size: 2rem;
     }
 
     & > span {
@@ -38,6 +37,7 @@ const Section = styled.section`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    justify-content: center;
     padding-bottom: 40px;
   }
 
@@ -45,10 +45,14 @@ const Section = styled.section`
     width: 100%;
 
     & > header {
-      padding: 0 20px;
+      padding: 0 30px 0 20px;
+    }
+  }
 
-      & > h2 {
-        font-size: 2rem;
+  @media ${devices.mobileS} {
+    & > header {
+      & > span {
+        font-size: 1.2rem;
       }
     }
   }

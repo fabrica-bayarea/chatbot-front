@@ -29,7 +29,7 @@
 
 a {
   color: var(--clr-dark);
-  border-bottom: 1px solid var(--clr-dark);
+  /* border-bottom: 1px solid var(--clr-dark); */
   text-decoration: none;
 }
 

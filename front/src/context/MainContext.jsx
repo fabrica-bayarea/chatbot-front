@@ -14,6 +14,7 @@ export function MainProvider({ children }) {
   // If successful, execute the passed function, otherwise show an error message.
   const makeRequest = useCallback(async (apiRequest, payload, successCode, successFn) => {
     setIsLoading(true);
+
     try {
       const { status, data } = await apiRequest({ ...payload });
       if (status === successCode) {
@@ -57,12 +58,13 @@ export function MainProvider({ children }) {
     setUser(null);
   };
 
-  const shared = { isLoading, login, logout, makeRequest, register, user };
+  const shared = { isLoading, user, login, logout, makeRequest, register };
 
   // If the last login has expired, log out
   useEffect(() => {
     const localUser = JSON.parse(localStorage.getItem('user'));
     const currentTime = new Date().getTime();
+
     if (localUser && currentTime > localUser.expirationTime) {
       logout();
     }

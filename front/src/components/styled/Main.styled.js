@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { devices } from '../../utils/';
+import { devices } from '../../utils';
 
 const Main = styled.main`
   align-items: center;

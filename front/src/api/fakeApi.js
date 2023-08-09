@@ -1,13 +1,14 @@
 import axios from 'axios';
 
 import db from './db';
+import { statusCodes } from '../utils';
 
 axios.defaults.baseURL = 'http://localhost:3001';
 
 function fakeRequest(successFn) {
   const promise = new Promise((resolve, reject) => {
     setTimeout(async () => {
-      const isSuccess = Math.random() < 0.95;
+      const isSuccess = Math.random() < 0.99;
       if (isSuccess) {
         const result = await successFn();
         resolve(result);
@@ -21,26 +22,14 @@ function fakeRequest(successFn) {
 }
 
 const fakeApi = {
-  async login({ body: { email, password } }) {
-    const successFn = async () => {
-      const user = await db.users.get({ email });
-      if (!user) {
-        return { status: 404, data: { message: 'E-mail não cadastrado.' } };
-      } else if (user.password !== password) {
-        return { status: 409, data: { message: 'Senha inválida.' } };
-      }
-      delete user.password;
-      return { status: 200, data: user };
-    };
-
-    return fakeRequest(successFn);
-  },
-
   async createUser({ body: { email, name, password } }) {
     const successFn = async () => {
       const user = await db.users.get({ email });
       if (user) {
-        return { status: 404, data: { message: 'E-mail já cadastrado.' } };
+        return {
+          status: statusCodes.NOT_FOUND,
+          data: { message: 'E-mail já cadastrado.' },
+        };
       }
       const userId = await db.users.add({ email, name, password });
       return { status: 201, data: userId };
@@ -49,13 +38,22 @@ const fakeApi = {
     return fakeRequest(successFn);
   },
 
-  async fetchConversation({ id }) {
+  async deleteConversation({ id }) {
     const successFn = async () => {
-      const conversation = await db.conversations.get(id);
-      if (!conversation) {
-        return { status: 404, data: { message: 'Histórico não encontrado.' } };
+      await db.conversations.delete(id);
+      return { status: statusCodes.OK, data: true };
+    };
+
+    return fakeRequest(successFn);
+  },
+
+  async fetchHistory({ userId }) {
+    const successFn = async () => {
+      const history = await db.conversations.where({ user_id: userId }).toArray();
+      if (!history) {
+        return { status: statusCodes.NOT_FOUND, data: { message: 'Sem registros.' } };
       }
-      return { status: 200, data: conversation };
+      return { status: statusCodes.OK, data: history };
     };
 
     return fakeRequest(successFn);
@@ -78,7 +76,28 @@ const fakeApi = {
       } else {
         await db.conversations.update(conversationId, newConversation);
       }
-      return { status: 200, data: { conversationId, messages: messagesWithReply } };
+      return {
+        status: statusCodes.OK,
+        data: { conversationId, messages: messagesWithReply },
+      };
+    };
+
+    return fakeRequest(successFn);
+  },
+
+  async login({ body: { email, password } }) {
+    const successFn = async () => {
+      const user = await db.users.get({ email });
+      if (!user) {
+        return {
+          status: statusCodes.NOT_FOUND,
+          data: { message: 'E-mail não cadastrado.' },
+        };
+      } else if (user.password !== password) {
+        return { status: statusCodes.CONFLICT, data: { message: 'Senha inválida.' } };
+      }
+      delete user.password;
+      return { status: statusCodes.OK, data: user };
     };
 
     return fakeRequest(successFn);

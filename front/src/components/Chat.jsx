@@ -6,9 +6,12 @@ import styled, { css } from 'styled-components';
 
 import { IconButton, Form, ChatInput } from './styled';
 import { ChatContext, MainContext } from '../context';
-import { devices } from '../utils/';
+import { devices } from '../utils';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   padding: 0;
   position: relative;
   width: 100%;
@@ -17,8 +20,8 @@ const Container = styled.div`
 const Conversation = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 10;
   gap: 30px;
-  height: 500px;
   overflow-y: scroll;
   padding: 40px 20px 0 40px;
 
@@ -28,14 +31,6 @@ const Conversation = styled.div`
 
   &::-webkit-scrollbar-thumb {
     background-color: var(--clr-c);
-  }
-
-  & > div {
-    margin: 0 0 40px 40px;
-  }
-
-  @media ${devices.laptopS} {
-    height: 400px;
   }
 
   @media ${devices.mobileL} {
@@ -94,6 +89,10 @@ const ChatMessage = styled.span`
     `}
 `;
 
+const LoadingContainer = styled.div`
+  margin: 0 0 40px 40px;
+`;
+
 const SendButton = styled(IconButton)`
   bottom: 20px;
   height: 60px;
@@ -106,13 +105,13 @@ const SendButton = styled(IconButton)`
 `;
 
 function Chat() {
-  const { isLoading } = useContext(MainContext);
   const { messages, getReply } = useContext(ChatContext);
+  const { isLoading } = useContext(MainContext);
   const inputRef = useRef();
   const loadingRef = useRef();
   const [error, setError] = useState(false);
 
-  // Requests a reply to update the conversation.
+  // Requests a reply to update the conversation
   const handleSubmit = async (event) => {
     event.preventDefault();
     const content = inputRef.current.value;
@@ -149,9 +148,9 @@ function Chat() {
           </ChatMessage>
         ))}
         {error && <ChatMessage $role='error'>Ooops... algo deu errado.</ChatMessage>}
-        <div ref={loadingRef}>
+        <LoadingContainer ref={loadingRef}>
           {isLoading && <BeatLoader color='lightgray' size={8} />}
-        </div>
+        </LoadingContainer>
       </Conversation>
       <Form onSubmit={handleSubmit}>
         <ChatInput type='text' ref={inputRef} placeholder='Digite uma mensagem...' />
