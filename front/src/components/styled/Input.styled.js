@@ -21,13 +21,13 @@ const Input = styled.input`
 const ChatInput = styled(Input)`
   border: none;
   border-top: 1px solid var(--clr-lighter-gray);
-  font-size: 1.2rem;
+  font-size: 1.2em;
   height: 50px;
 `;
 
 const MainInput = styled(Input)`
   border: 1px solid var(--clr-lighter-gray);
-  font-size: 1rem;
+  font-size: 1em;
 `;
 
 export { Input, ChatInput, MainInput };

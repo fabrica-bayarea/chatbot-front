@@ -44,15 +44,19 @@ const ListItem = styled.li`
 const ItemDetails = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: 0.75rem;
   gap: 5px;
 
+  & > span:nth-child(1) {
+    font-size: 0.75em;
+  }
+
   & > span:nth-child(2) {
+    font-size: 0.75em;
     margin-bottom: 5px;
   }
 
   & > span:nth-child(3) {
-    font-size: 0.9rem;
+    font-size: 0.9em;
   }
 `;
 

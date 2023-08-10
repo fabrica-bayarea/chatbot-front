@@ -54,7 +54,7 @@ const LogoImage = styled.div`
 `;
 
 const LogoText = styled.h1`
-  font-size: 5rem;
+  font-size: 5em;
 `;
 
 function Logo() {

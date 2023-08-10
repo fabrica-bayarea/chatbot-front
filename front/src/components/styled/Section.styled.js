@@ -22,11 +22,11 @@ const Section = styled.section`
     padding: 0 40px;
 
     & > h2 {
-      font-size: 2rem;
+      font-size: 2em;
     }
 
     & > span {
-      font-size: 1.5rem;
+      font-size: 1.5em;
     }
   }
 
@@ -49,13 +49,13 @@ const Section = styled.section`
     }
   }
 
-  @media ${devices.mobileS} {
+  /* @media ${devices.mobileS} {
     & > header {
       & > span {
-        font-size: 1.2rem;
+        font-size: 1.2em;
       }
     }
-  }
+  } */
 `;
 
 export { Section };

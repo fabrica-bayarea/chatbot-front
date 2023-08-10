@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const ToggleButton = styled(IconButton)`
   color: var(--clr-light);
-  font-size: 2rem;
+  font-size: 2em;
   position: relative;
   z-index: 100;
 `;

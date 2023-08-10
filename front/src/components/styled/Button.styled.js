@@ -32,7 +32,7 @@ const IconButton = styled(Button)`
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   color: ${(props) => props.$color || 'var(--clr-dark)'};
-  font-size: 1.5rem;
+  font-size: 1.5em;
   height: 40px;
   scale: ${(props) => props.$scale || 1};
 
@@ -57,7 +57,7 @@ const MainButton = styled(Button)`
   border: 2px solid var(--clr-b);
   border-radius: 25px;
   color: var(--clr-a);
-  font-size: 1.2rem;
+  font-size: 1.2em;
   height: 50px;
   padding: 0 10px;
   width: 250px;

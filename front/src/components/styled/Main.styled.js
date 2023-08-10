@@ -17,6 +17,10 @@ const Main = styled.main`
   @media ${devices.mobileL} {
     padding: 0 10px 20px;
   }
+
+  @media ${devices.mobileM} {
+    font-size: 0.9rem;
+  }
 `;
 
 export { Main };

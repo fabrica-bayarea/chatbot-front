@@ -14,7 +14,7 @@ const Container = styled.div`
   min-width: 90px;
 
   & > button {
-    font-size: 1rem;
+    font-size: 1em;
     opacity: 0.4;
 
     &:hover {
