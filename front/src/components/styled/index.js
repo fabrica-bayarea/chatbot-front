@@ -1,4 +1,11 @@
-import { Button, DropdownButton, IconButton, MainButton } from './Button.styled';
+import {
+  Button,
+  DialogButton,
+  DropdownButton,
+  IconButton,
+  MainButton,
+} from './Button.styled';
+
 import { Form } from './Form.styled';
 import { Input, ChatInput, MainInput } from './Input.styled';
 import { Label } from './Label.styled';
@@ -8,6 +15,7 @@ import { ChatMessage } from './Span.styled';
 
 export {
   Button,
+  DialogButton,
   DropdownButton,
   IconButton,
   MainButton,
