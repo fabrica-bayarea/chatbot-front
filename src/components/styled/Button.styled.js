@@ -16,6 +16,21 @@ const Button = styled.button`
   }
 `;
 
+const DialogButton = styled(Button)`
+  border: 1px solid var(--clr-c);
+  border-radius: 5px;
+  min-width: 60px;
+  padding: 10px;
+
+  &:hover:not(:disabled) {
+    background-color: var(--clr-c);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+`;
+
 const DropdownButton = styled(Button)`
   background-color: var(--clr-a);
   color: var(--clr-light);
@@ -67,4 +82,4 @@ const MainButton = styled(Button)`
   }
 `;
 
-export { Button, DropdownButton, IconButton, MainButton };
+export { Button, DialogButton, DropdownButton, IconButton, MainButton };

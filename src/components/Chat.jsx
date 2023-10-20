@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BeatLoader from 'react-spinners/BeatLoader';
 import styled from 'styled-components';
 
+import Feedback from './Feedback';
 import { IconButton, Form, ChatInput, ChatMessage } from './styled';
 import { ChatContext, MainContext } from '../context';
 import { devices } from '../utils';
@@ -44,10 +45,6 @@ const Suggestions = styled.div`
   gap: 10px;
 `;
 
-const Loading = styled.div`
-  margin: 0 0 40px 40px;
-`;
-
 const SendButton = styled(IconButton)`
   bottom: 20px;
   height: 60px;
@@ -62,6 +59,7 @@ const SendButton = styled(IconButton)`
 function Chat() {
   const { messages, getReply } = useContext(ChatContext);
   const { isLoading } = useContext(MainContext);
+  const conversationRef = useRef();
   const inputRef = useRef();
   const loadingRef = useRef();
   const [error, setError] = useState(false);
@@ -96,7 +94,7 @@ function Chat() {
   const renderSuggestions = () => {
     const suggestions = [
       'Quais as cores da bandeira do Brasil?',
-      'Como eu troco uma lampâda?',
+      'Como trocar uma lâmpada?',
       'Conte uma história emocionante!',
     ];
 
@@ -117,7 +115,7 @@ function Chat() {
     );
   };
 
-  // Keeps the last message always visible
+  //
   useEffect(() => {
     if (messages.length !== 0) {
       loadingRef.current.scrollIntoView();
@@ -127,7 +125,7 @@ function Chat() {
   // Main render
   return (
     <Container>
-      <Conversation>
+      <Conversation ref={conversationRef}>
         <ChatMessage $role='assistant'>
           Eu sou <strong>Eda</strong>, assistente virtual.
           <br />
@@ -137,9 +135,10 @@ function Chat() {
         {renderMessages()}
         {messages.length === 0 && renderSuggestions()}
         {error && <ChatMessage $role='error'>Ooops... algo deu errado.</ChatMessage>}
-        <Loading ref={loadingRef}>
+        {!isLoading && messages.length !== 0 && <Feedback loadingRef={loadingRef} />}
+        <div ref={loadingRef}>
           {isLoading && <BeatLoader color='lightgray' size={8} />}
-        </Loading>
+        </div>
       </Conversation>
       <Form onSubmit={handleSubmit}>
         <ChatInput type='text' ref={inputRef} placeholder='Digite uma mensagem...' />

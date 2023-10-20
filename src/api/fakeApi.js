@@ -3,7 +3,7 @@ import axios from 'axios';
 import db from './db';
 import { statusCodes } from '../utils';
 
-axios.defaults.baseURL = 'http://localhost:3001';
+axios.defaults.baseURL = 'https://eda-back.onrender.com';
 
 function fakeRequest(successFn) {
   const promise = new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ function fakeRequest(successFn) {
       } else {
         reject({ message: 'Request failed.' });
       }
-    }, 3000);
+    }, 1000);
   });
 
   return promise;
@@ -61,7 +61,7 @@ const fakeApi = {
 
   async fetchReply({ body }) {
     let { conversationId } = body;
-    const { data } = await axios.post('/chatbot', { messages: body.messages });
+    const { data } = await axios.post('/chatbot/reply', { messages: body.messages });
     const time = new Date().getTime();
     const messagesWithReply = [...body.messages, { ...data.message, time }];
 
@@ -70,19 +70,16 @@ const fakeApi = {
       messages: messagesWithReply,
     };
 
-    const successFn = async () => {
-      if (!conversationId) {
-        conversationId = await db.conversations.add(newConversation);
-      } else {
-        await db.conversations.update(conversationId, newConversation);
-      }
-      return {
-        status: statusCodes.OK,
-        data: { conversationId, messages: messagesWithReply },
-      };
-    };
+    if (!conversationId) {
+      conversationId = await db.conversations.add(newConversation);
+    } else {
+      await db.conversations.update(conversationId, newConversation);
+    }
 
-    return fakeRequest(successFn);
+    return {
+      status: statusCodes.OK,
+      data: { conversationId, messages: messagesWithReply },
+    };
   },
 
   async login({ body: { email, password } }) {

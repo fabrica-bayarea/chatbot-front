@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 const ChatMessage = styled.span`
-  --r: 4px;
+  --r: 5px;
 
   line-height: 20px;
   padding: 10px;
